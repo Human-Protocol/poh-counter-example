@@ -1,0 +1,18 @@
+{
+  "name": "counter-contract",
+  "description": "Contract for a dApp permitting anyone to increment a counter",
+  "scripts": {
+    "test": "hardhat test",
+    "deploy:localhost": "hardhat run --network localhost scripts/deploy.js",
+    "deploy:mumbai": "hardhat run --network mumbai scripts/deploy.js"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "2.0.5",
+    "@nomiclabs/hardhat-waffle": "2.0.3",
+    "chai": "4.3.6",
+    "dotenv": "16.0.0",
+    "ethereum-waffle": "3.4.4",
+    "ethers": "5.6.2",
+    "hardhat": "2.9.2"
+  }
+}
