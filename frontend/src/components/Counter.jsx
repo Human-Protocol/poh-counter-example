@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ethers } from 'ethers';
 import { useMetaMask } from 'metamask-react';
+import { useProofOfHumanity } from 'poh-react';
+import HCaptchaValidator from 'poh-validator-hcaptcha-react';
 import Button from './Button';
 import Spinner from './Spinner';
 import Error from './Error';
-import { contractAddress } from '../config';
+import { contractAddress, validatorApiUrl, hcaptchaSitekey } from '../config';
 
 const abi = [
   'function counter() view returns (uint256)',
-  'function increment()',
+  'function increment(bytes calldata proof)',
   'event Increment(uint256 currentCounter)'
 ];
 
@@ -48,6 +50,14 @@ function Counter() {
     return () => counterContract.removeAllListeners();
   }, [ethereum]);
 
+  const validator = (
+    <HCaptchaValidator
+      validatorApiUrl={validatorApiUrl}
+      sitekey={hcaptchaSitekey}
+    />
+  );
+  const { getProofOfHumanity } = useProofOfHumanity(validator);
+
   if (!initialized) {
     return (
       <Wrapper>
@@ -76,6 +86,13 @@ function Counter() {
     setLoading(true);
 
     try {
+      const { error, errorMessage, proof } = await getProofOfHumanity();
+      if (error) {
+        setError(errorMessage);
+        setLoading(false);
+        return;
+      }
+
       const provider = new ethers.providers.Web3Provider(ethereum);
       const counterContract = new ethers.Contract(
         contractAddress,
@@ -85,7 +102,7 @@ function Counter() {
       const signer = provider.getSigner();
       const counterWithSigner = counterContract.connect(signer);
 
-      const tx = await counterWithSigner.increment();
+      const tx = await counterWithSigner.increment(proof);
       const { events } = await tx.wait();
       if (events.length > 0 && events[0].args.currentCounter) {
         setCount(Number(events[0].args.currentCounter));

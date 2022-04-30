@@ -1,12 +1,18 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.5 <0.9.0;
 
-contract Counter {
+import "poh-contracts/contracts/HumanOnly.sol";
+
+contract Counter is HumanOnly {
     uint256 public counter;
 
     event Increment(uint256 currentCounter);
 
-    function increment() public {
+    constructor() {
+      setHumanityValidator(0x9064071eaB7c22E00e2d63233a9507d7107cFCD1);
+    }
+
+    function increment(bytes calldata proof) public basicPoH(proof) {
         counter++;
 
         if (counter > 99) {
