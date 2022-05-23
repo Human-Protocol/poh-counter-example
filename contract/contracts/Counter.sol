@@ -12,7 +12,7 @@ contract Counter is HumanOnly {
       setHumanityValidator(0x9064071eaB7c22E00e2d63233a9507d7107cFCD1);
     }
 
-    function increment(bytes calldata proof) public basicPoH(proof) {
+    function increment(bytes calldata proof) public sovereignPoH(proof) {
         counter++;
 
         if (counter > 99) {
