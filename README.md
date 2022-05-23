@@ -19,7 +19,7 @@ https://poh-counter.bakoush.in
 
 ## See also
 
-- [Proof-of-Humanity-React](https://npmjs.com/packages/poh-react)
+- [Proof-of-Humanity-React](https://npmjs.com/package/poh-react)
 - [Proof-of-Humanity hCaptcha Validator API](https://github.com/bakoushin/poh-validator-hcaptcha-api)
 - [Proof-of-Humanity hCaptcha Validator React](https://npmjs.com/package/poh-validator-hcaptcha-react)
 - [Proof-of-Humanity Solidity Contracts](https://github.com/bakoushin/poh-contracts)
