@@ -56,7 +56,10 @@ function Counter() {
       sitekey={hcaptchaSitekey}
     />
   );
-  const { getProofOfHumanity } = useProofOfHumanity(validator);
+  const { getProofOfHumanity } = useProofOfHumanity(validator, {
+    type: 'sovereign',
+    ethereum
+  });
 
   if (!initialized) {
     return (
